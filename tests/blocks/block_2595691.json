@@ -1,0 +1,48 @@
+{
+  "timestamp": 1649213866,
+  "timestamp human": "(2022-04-06 02:57:46)",
+  "previous hash": "65ac9bdc1f5011308d3aca1d7a95bfb59841c78e39233636e8ac1bad0c16e4af",
+  "nonce": 2097236282,
+  "is orphan": 0,
+  "height": 2595691,
+  "depth": 12873,
+  "hash": "f63f84ae373307d18cb1b59a01174d19d104d378cb905bccdd04c3938d7426e5",
+  "difficulty": 355193078440,
+  "cumulative difficulty": 184874435744790797,
+  "POW hash": "d261125988c386b9be0b3c30466479cbbf0f0da7dc835f5977aaf60200000000",
+  "block size": 15349,
+  "block weight": 15349,
+  "long term weight": 15349,
+  "num txes": 8,
+  "reward": 0.661424671679,
+  "miner tx hash": "4c91b28c95ed0b3e43382fbe15cf083f0620182ca618190b25bc3524b64b8148"
+},
+{
+  "major_version": 14,
+  "minor_version": 14,
+  "timestamp": 1649213866,
+  "prev_id": "65ac9bdc1f5011308d3aca1d7a95bfb59841c78e39233636e8ac1bad0c16e4af",
+  "nonce": 2097236282,
+  "miner_tx": {
+    "version": 2,
+    "unlock_time": 2595751,
+    "vin": [ {
+        "gen": {
+          "height": 2595691
+        }
+      }
+    ],
+    "vout": [ {
+        "amount": 661424671679,
+        "target": {
+          "key": "85b715419378627b85f93076e8794e24b7507a0321c37709feb578a0c85645ec"
+        }
+      }
+    ],
+    "extra": [ 1, 30, 183, 190, 228, 185, 14, 223, 207, 249, 207, 106, 158, 123, 237, 232, 66, 224, 154, 176, 23, 254, 168, 71, 100, 97, 81, 246, 54, 171, 53, 74, 159, 2, 8, 28, 18, 24, 30, 82, 253, 252, 0],
+    "rct_signatures": {
+      "type": 0
+    }
+  },
+  "tx_hashes": [ "36371691faa105245c3cc4cb8b0266458b4ce16a3faeb41850d7d43c2cb45a1f", "d01915d0e1c89d8c1606d34be637907b2aae42f1fa251e480082abd5e61f795c", "c94a8852293b6568dd415de72d0001bbc0cde64bdd2012c5e7869fa97237c3c3", "c8c9a820c6c2980d6986d9d41e84310f6c7bcf3fff291972d58b53feb33ebdcf", "d39420050b2e0a88aaa7d854533fe3d74fed447fd9fb3d6ee47720927296e798", "aa20627ad35a2ccc1666743ed1918ecbe5489ca7bbfb7e875e8c426a886fa094", "4d36dc0864c3e2833f6784207f97aaafb2be15c89aabda84e1b4cc0eb1da2096", "b5032c363a6562cac5f949d8816f652761b29fd9a1984ac0a59325bf6032e51e"]
+}
