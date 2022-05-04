@@ -139,7 +139,11 @@ def parse_extra_nonce(data: bytes) -> (int, str):
 
 def parse_merge_mining(data: bytes) -> (int, str):
     idx = 0
-    return idx
+    byte_length = data[idx]
+    idx = idx + 1
+    merge_mining = data[idx:idx+byte_length]
+    idx = idx + byte_length
+    return idx, merge_mining
 
 
 def parse_additional_public_keys(data: bytes) -> (int, list):
