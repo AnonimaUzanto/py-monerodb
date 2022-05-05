@@ -1,3 +1,6 @@
+"""
+Table contains multiple records per output amount (72,892,050 entries.
+"""
 from pymonerodb.utils.database import get_db_env
 from pymonerodb.utils.readers import pretty_print
 

@@ -1,9 +1,12 @@
+import binascii
 import lmdb
 
 from pymonerodb.constants import DATABASE_DIRECTORY
 
 
-piconero = 10E-12
+# zero_k_value is used for databases that use duplicate keys
+zero_k_value = binascii.unhexlify('0000000000000000')
+piconero = 1E-12
 
 
 def get_db_env(directory: str = DATABASE_DIRECTORY) -> lmdb.Environment:
@@ -26,8 +29,9 @@ def describe_tables(env: lmdb.Environment) -> dict:
     with env.begin() as txn:
         with txn.cursor() as cursor:
             for key, value in cursor:
-                db_child = env.open_db(key)
-                tables[key.decode()] = db_child.flags()
+                db_child = env.open_db(key, txn)
+                tables[key.decode()] = {"flags": db_child.flags(),
+                                        "stat": txn.stat(db_child)}
     return tables
 
 

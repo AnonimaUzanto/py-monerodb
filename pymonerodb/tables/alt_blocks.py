@@ -1,3 +1,6 @@
+"""
+Table typically contains very few records (1 entry).
+"""
 import binascii
 
 from pymonerodb.utils.database import get_db_env
@@ -45,11 +48,11 @@ def parse_block(block: bytes) -> dict:
     idx = idx + _
     _, vouts = parse_vouts(block[idx:], vout_count)
     idx = idx + _
-    unknown = block[idx:idx+1].hex()
-    idx = idx + 1
-    _, tx_extra = parse_tx_extra(block[idx:])
-    miner_tx_extra = list(block[idx:idx+_])
+    _, tx_extra_length = varint_decoder(block[idx:])
     idx = idx + _
+    miner_tx_extra = list(block[idx:idx+tx_extra_length])
+    # miner_tx_extra = parse_tx_extra(block[idx:idx+tx_extra_length])
+    idx = idx + tx_extra_length
     _, rct_signatures_type = varint_decoder(block[idx:])
     idx = idx + _
     if idx == len(block):
@@ -80,7 +83,7 @@ def parse_block(block: bytes) -> dict:
             ],
             "vout": vouts,
             "extra": miner_tx_extra,
-            "signatures": {
+            "rct_signatures": {
                 "type": rct_signatures_type
             }
         },
@@ -89,12 +92,14 @@ def parse_block(block: bytes) -> dict:
 
 
 def parse_vouts(data: bytes, count: int) -> (int, list):
+    # vout_tx_out_to_key is byte indicator
+    # https://github.com/monero-project/monero/blob/master/src/cryptonote_basic/cryptonote_basic.h#L572
     idx = 0
     vouts = []
     for i in range(count):
         _, vout_amount = varint_decoder(data[idx:])
         idx = idx + _
-        vout_tx_out_to_key = data[idx:idx+1].hex()  # https://github.com/monero-project/monero/blob/master/src/cryptonote_basic/cryptonote_basic.h#L572
+        vout_tx_out_to_key = data[idx:idx+1].hex()
         idx = idx + 1
         vout_key = data[idx:idx+32].hex()
         idx = idx + 32
@@ -103,6 +108,15 @@ def parse_vouts(data: bytes, count: int) -> (int, list):
                           "key": vout_key}
                       })
     return idx, vouts
+
+
+def parse_tx_hashes(data: bytes, count: int) -> (int, list):
+    idx = 0
+    tx_hashes = []
+    for i in range(count):
+        tx_hashes.append(data[idx:idx+32].hex())
+        idx = idx + 32
+    return idx, tx_hashes
 
 
 def parse_tx_extra(data: bytes) -> (int, list):
@@ -162,15 +176,6 @@ def parse_additional_public_keys(data: bytes) -> (int, list):
 def parse_minergate_tag(data: bytes) -> (int, str):
     idx = 0
     return idx
-
-
-def parse_tx_hashes(data: bytes, count: int) -> (int, list):
-    idx = 0
-    tx_hashes = []
-    for i in range(count):
-        tx_hashes.append(data[idx:idx+32].hex())
-        idx = idx + 32
-    return idx, tx_hashes
 
 
 if __name__ == "__main__":

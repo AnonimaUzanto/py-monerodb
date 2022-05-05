@@ -1,0 +1,43 @@
+{
+  "major_version": 3,
+  "minor_version": 5,
+  "timestamp": 1474530861,
+  "prev_id": "423405259907584d40be2b27083c204573c21a83fa6219770a79b9e3e455f47a",
+  "nonce": 1351,
+  "miner_tx": {
+    "version": 1,
+    "unlock_time": 1141377,
+    "vin": [ {
+        "gen": {
+          "height": 1141317
+        }
+      }
+    ],
+    "vout": [ {
+        "amount": 400000000,
+        "target": {
+          "key": "e53a9d331ee24bcfbe2746772d997b5f83ebc134b2f4a0534ced3e6fa66102ac"
+        }
+      }, {
+        "amount": 20000000000,
+        "target": {
+          "key": "905d1d03e47760b9a71efbf94f253416d2cfcde350505fd7d3c1623fa3a9e3ac"
+        }
+      }, {
+        "amount": 500000000000,
+        "target": {
+          "key": "b0333095790adc859daf952a209f5372badc6e31ab3d33e716cef140f51857dc"
+        }
+      }, {
+        "amount": 10000000000000,
+        "target": {
+          "key": "55bc6711245c5a3eebfe2a3f988fe0047473010497cfede09a252da909830637"
+        }
+      }
+    ],
+    "extra": [ 1, 32, 9, 129, 92, 252, 72, 192, 10, 172, 253, 231, 127, 55, 149, 192, 182, 33, 102, 223, 70, 63, 75, 3, 249, 163, 199, 113, 77, 32, 32, 248, 128, 2, 8, 0, 0, 0, 66, 136, 168, 218, 187
+    ],
+    "signatures": [ ]
+  },
+  "tx_hashes": [ "32b12d4b5bc0bca47ab772d8d60898d6ca655b8d91d7d317ea476cf4c8d6fe2a", "05b0f48e089bb634bfeef2e8d5ef2faeccdbbb2e0ab78cb6e35a30c29e0c7dd3", "4489119d59fd1a0ee4060aab647b891f86006fba70354d006fb79bb37643e32b"]
+}

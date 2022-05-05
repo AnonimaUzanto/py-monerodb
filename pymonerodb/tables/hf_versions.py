@@ -1,3 +1,6 @@
+"""
+Table contains one record for each block (2,595,692 entries).
+"""
 from pymonerodb.utils.database import get_db_env
 
 

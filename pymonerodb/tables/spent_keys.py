@@ -1,3 +1,6 @@
+"""
+Table contains one record for each spent key (64,238,296 records).
+"""
 import binascii
 
 from pymonerodb.utils.database import get_db_env

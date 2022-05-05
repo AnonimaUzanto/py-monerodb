@@ -1,0 +1,30 @@
+{
+  "major_version": 9,
+  "minor_version": 9,
+  "timestamp": 1539977241,
+  "prev_id": "0083080a05edc3366b46dc1296d27dcf6da2323db88d54ae0d5c89be3ef96715",
+  "nonce": 240760,
+  "miner_tx": {
+    "version": 2,
+    "unlock_time": 1686335,
+    "vin": [ {
+        "gen": {
+          "height": 1686275
+        }
+      }
+    ],
+    "vout": [ {
+        "amount": 3711302736427,
+        "target": {
+          "key": "269917ce30d4a6765bb14b57d23ef13f881d26eb50472dc209de757674b4c0c3"
+        }
+      }
+    ],
+    "extra": [ 1, 140, 80, 8, 218, 27, 198, 125, 86, 182, 93, 82, 49, 183, 181, 92, 171, 114, 104, 120, 46, 157, 19, 21, 200, 136, 95, 123, 40, 61, 101, 66, 219, 2, 8, 0, 0, 1, 44, 11, 3, 0, 0
+    ],
+    "rct_signatures": {
+      "type": 0
+    }
+  },
+  "tx_hashes": [ "9d6900c318dc2bf63083818c81b0f8663ead25da379234f41e1f0185d8b3facd", "96692719ca413d7533dffa731a786b24655eb3a0183b0ba91ce4792202060dfb"]
+}

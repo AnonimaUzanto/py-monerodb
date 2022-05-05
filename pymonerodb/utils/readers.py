@@ -1,5 +1,7 @@
 import json
 
+from datetime import datetime
+
 
 def varint_decoder(data):
     """https://github.com/fmoo/python-varint/blob/master/varint.py"""
@@ -19,3 +21,7 @@ def varint_decoder(data):
 
 def pretty_print(data: dict):
     print(json.dumps(data, indent=4))
+
+
+def format_timestamp(timestamp):
+    return datetime.utcfromtimestamp(timestamp).strftime("%Y-%m-%d %H:%M:%S UTC")

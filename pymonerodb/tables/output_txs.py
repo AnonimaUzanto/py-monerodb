@@ -1,3 +1,6 @@
+"""
+Table contains (72,892,050 entries).
+"""
 import binascii
 
 from pymonerodb.utils.database import get_db_env

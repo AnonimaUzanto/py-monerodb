@@ -1,3 +1,6 @@
+"""
+Table contains one record for each transaction in the current transaction pool (8 entries).
+"""
 import binascii
 
 from pymonerodb.utils.database import get_db_env

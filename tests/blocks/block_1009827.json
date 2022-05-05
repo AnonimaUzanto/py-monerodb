@@ -1,0 +1,78 @@
+{
+  "major_version": 2,
+  "minor_version": 2,
+  "timestamp": 1458748658,
+  "prev_id": "9746ff316575cf3b78a3408b9600f2c45b0cf2342e5b823bd32f40b42e141262",
+  "nonce": 569,
+  "miner_tx": {
+    "version": 1,
+    "unlock_time": 1009887,
+    "vin": [ {
+        "gen": {
+          "height": 1009827
+        }
+      }
+    ],
+    "vout": [ {
+        "amount": 1,
+        "target": {
+          "key": "6b6bed782459fa92834258ec97d6acad362fde8fd186209733014667bd95a279"
+        }
+      }, {
+        "amount": 80,
+        "target": {
+          "key": "99dcd4d171530cdf5baec264b956654df89f96d6db1eeb6f5c4185c87e7321a9"
+        }
+      }, {
+        "amount": 300,
+        "target": {
+          "key": "341dab73238b4b9a7c5a1a5f840169937e51df428aa1e36ef06c16acacbd573f"
+        }
+      }, {
+        "amount": 9000,
+        "target": {
+          "key": "04abe076b359015aaf7b9305e4bb9239779d1379d4eeffc8899f499126bfb431"
+        }
+      }, {
+        "amount": 10000,
+        "target": {
+          "key": "efab6308dbc1db39f8282902bf6045d379d69fbf22b14523f3ce47b00dbeb9ad"
+        }
+      }, {
+        "amount": 100000,
+        "target": {
+          "key": "9a6050554bf5aca8b4125c724e9e039a60822e1f1afd7374f21d2a196fac06b9"
+        }
+      }, {
+        "amount": 7000000,
+        "target": {
+          "key": "31cd84890075fbc139c45aabb00c88cc9ec75cb4fb32958110b5cf8984d64a0b"
+        }
+      }, {
+        "amount": 50000000,
+        "target": {
+          "key": "e7e1be4c61211a3042c84d86420fe0ed37d56901d463964658b152e45bc09e62"
+        }
+      }, {
+        "amount": 800000000,
+        "target": {
+          "key": "9c10e57e89f4a7638a39a2a7f8e7f53b37f19025aa40f4111689cc375c5c6e3f"
+        }
+      }, {
+        "amount": 3000000000,
+        "target": {
+          "key": "2dd0baea695f3b51627a9bcb6daa64b12d3f298f90d171c1aabcd5a3c4afdad0"
+        }
+      }, {
+        "amount": 14050000000000,
+        "target": {
+          "key": "e2ede28f5931b0705c858fc1d00b462214108b9f47046470f83d811b5115810e"
+        }
+      }
+    ],
+    "extra": [ 1, 160, 179, 242, 50, 144, 9, 51, 147, 239, 98, 24, 189, 8, 40, 75, 33, 90, 82, 238, 38, 76, 204, 67, 187, 174, 113, 181, 91, 220, 204, 68, 155, 2, 8, 0, 0, 0, 42, 158, 255, 82, 158, 0
+    ],
+    "signatures": [ ]
+  },
+  "tx_hashes": [ "2e17889cf33296c1050f6356ff7569b5c222dc2af28ffd7ac52e1bbc21b2c84f", "08e9f318e1ac89b846ad7d678023aaae26bda5415512f1df39b896da3b818277", "b8a4e37c5432293166fb3f3412293c9894d926e73ead2e3c336f132423df72b5", "61d5afebcd7742583c178807385b3cd87887a65a1b2b48cf2d87a2c7f5fba828"]
+}

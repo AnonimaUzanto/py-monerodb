@@ -85,8 +85,7 @@ are similar to tables in relational database. The tables in the Monero database 
 </div>
 
 &nbsp;  
-LMDB databases store key:value pairs of bytestrings. Monero uses a modified version of LMDB to more efficiently
-use 32 byte hashes and 16 byte integers as keys in some tables. Most tables use a standard key:value pair where the
+LMDB databases store key:value pairs of bytestrings. Most tables use a standard key:value pair where the
 key is the actual key used to look up the corresponding value. In some tables the key is uniformly 8 bytes of
 zeros while the pseudokey is the first 8 or 32 bytes of the value. In these instances the table structure is more
 accurately represented as zero_key:pseudokey|value. As an example, in the `block_info` table all of the keys are 
@@ -136,9 +135,9 @@ tables with an approximation of a primary key for each table.
 
 ### Prerequisites
 
-This project requires a modified version of the package `py-lmdb`. As previously stated Monero uses non-standard
-pseudo keys (32 byte hash, 8 byte integer) for some tables. This requires modified comparison functionality in
-the `py-lmdb` package.
+This project requires a modified version of the package `py-lmdb`. In some tables Monero uses pseudo keys 
+(32 byte hash, 8 byte integer) that require modified comparison functionality that is included in a forked
+version of the `py-lmdb` package.
 
 ```
 git clone https://github.com/AnonimalUzanto/py-lmdb

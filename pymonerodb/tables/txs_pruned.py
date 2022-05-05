@@ -1,3 +1,6 @@
+"""
+Table contains one record for each transaction (23,897,632 entries).
+"""
 from pymonerodb.utils.database import get_db_env
 from pymonerodb.utils.readers import varint_decoder, pretty_print
 
