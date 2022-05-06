@@ -33,8 +33,10 @@ def parse_block(block: bytes) -> dict:
     _, unlock_time = varint_decoder(block[idx:])
     idx = idx + _
     txin_to_scripthash = block[idx:idx+1].hex()  # https://github.com/monero-project/monero/blob/master/src/cryptonote_basic/cryptonote_basic.h#L572
+    print(txin_to_scripthash)
     idx = idx + 1
     txin_gen = block[idx:idx+1].hex()  # https://github.com/monero-project/monero/blob/master/src/cryptonote_basic/cryptonote_basic.h#L572
+    print(txin_gen)
     idx = idx + 1
     _, height = varint_decoder(block[idx:])
     idx = idx + _
@@ -45,7 +47,7 @@ def parse_block(block: bytes) -> dict:
     _, tx_extra_length = varint_decoder(block[idx:])
     idx = idx + _
     miner_tx_extra = list(block[idx:idx+tx_extra_length])
-    # miner_tx_extra = parse_tx_extra(block[idx:idx+tx_extra_length])
+    parse_tx_extra(block[idx:idx+tx_extra_length])
     idx = idx + tx_extra_length
     _, rct_signatures_type = varint_decoder(block[idx:])
     idx = idx + _
@@ -113,30 +115,59 @@ def parse_tx_hashes(data: bytes, count: int) -> (int, list):
     return idx, tx_hashes
 
 
-def parse_tx_extra(data: bytes) -> list:
+def parse_tx_extra(data: bytes) -> dict:
     # https://github.com/monero-project/monero/blob/master/src/cryptonote_basic/tx_extra.h
     # https://monero.stackexchange.com/questions/11888/complete-extra-field-structure-standard-interpretation
-    tx_extra_bytes = {
-        # b'\x00': parse_padding,  # padding, zero bytes
-        b'\x01': parse_public_key,  # public key, 32 bytes
-        b'\x02': parse_extra_nonce,  # extra nonce, next byte equals byte length
-        b'\x03': parse_merge_mining,  # no longer used
-        b'\x04': parse_additional_public_keys,  # next byte equals number of public keys
-        b'\xDE': parse_minergate_tag  # unknown
-        }
+
+    padding = []
+    public_key = []
+    extra_nonce = []
+    merge_mining = []
+    additional_public_keys = []
+    minergate = []
+    remainder = []
+
     idx = 0
-    tx_extra = []
-    while data[idx:idx + 1] in tx_extra_bytes.keys():
+    while idx < len(data):
         tag = data[idx:idx + 1]
-        fn = tx_extra_bytes.pop(tag)
         idx = idx + 1
-        if idx + data[idx] >= len(data):
-            idx = idx - 1
-            break
-        _, extra = fn(data[idx:])
-        tx_extra.append(extra)
-        idx = idx + _
-    return tx_extra
+        if tag == b'\x00':  # padding, zero bytes
+            padding.append(idx-1)
+        elif tag == b'\x01':  # public key, 32 bytes
+            count = 1
+            _, pk = parse_public_keys(data[idx:], count)
+            public_key.append(pk)
+            idx = idx + _
+        elif tag == b'\x04':  # additional public keys, next byte equals number of public keys
+            count = data[idx:idx+1]
+            idx = idx + 1
+            _, pk = parse_public_keys(data[idx:], count)
+            additional_public_keys.append(pk)
+            idx = idx + _
+        elif tag == b'\x02':  # extra nonce, next byte equals byte length
+            _, known = parse_known(data[idx:])
+            extra_nonce.append(known)
+            idx = idx + _
+        elif tag == b'\x03':  # p2pool, next byte equals byte length
+            _, known = parse_known(data[idx:])
+            merge_mining.append(known)
+            idx = idx + _
+        elif tag == b'\xDE':  # minergate tag
+            _, known = parse_known(data[idx:])
+            minergate.append(known)
+            idx = idx + _
+        else:
+            _, unknown = parse_unknown(data[idx:])
+            remainder.append(unknown)
+            idx = idx + _
+
+    return {"padding": padding,
+            "minergate": minergate,
+            "public_key": public_key,
+            "extra_nonce": extra_nonce,
+            "merge_mining": merge_mining,
+            "additional_public_keys": additional_public_keys,
+            "remainder": remainder}
 
 
 def parse_padding(data: bytes) -> (int, list):
@@ -146,49 +177,31 @@ def parse_padding(data: bytes) -> (int, list):
     return idx, list(data[0:idx])
 
 
-def parse_public_key(data: bytes) -> (int, str):
+def parse_public_keys(data: bytes, count: int) -> (int, list):
     idx = 0
-    public_key = data[idx:idx+32].hex()
-    idx = idx + 32
-    return idx, public_key
+    public_keys = []
+    for i in range(count):
+        public_keys.append(data[idx:idx+32])
+        idx = idx + 32
+    return idx, public_keys
 
 
-def parse_extra_nonce(data: bytes) -> (int, list):
+def parse_known(data: bytes) -> (int, list):
     idx = 0
     byte_length = data[idx]
     idx = idx + 1
-    extra_nonce = list(data[idx:idx+byte_length])
+    extra_nonce = data[idx:idx+byte_length]
     idx = idx + byte_length
     return idx, extra_nonce
 
 
-def parse_merge_mining(data: bytes) -> (int, str):
+def parse_unknown(data: bytes) -> (int, list):
     idx = 0
-    byte_length = data[idx]
-    idx = idx + 1
-    merge_mining = data[idx:idx+byte_length]
+    _, byte_length = varint_decoder(data[idx:])
+    idx = idx + _
+    junk = data[idx:idx+byte_length]
     idx = idx + byte_length
-    return idx, merge_mining
-
-
-def parse_additional_public_keys(data: bytes) -> (int, list):
-    idx = 0
-    additional_public_keys = []
-    count = data[idx]
-    idx = idx + 1
-    for i in range(count):
-        additional_public_keys.append(data[idx:idx+32])
-        idx = idx + 32
-    return idx, additional_public_keys
-
-
-def parse_minergate_tag(data: bytes) -> (int, str):
-    idx = 0
-    byte_length = data[idx]
-    idx = idx + 1
-    minergate = data[idx:idx+byte_length]
-    idx = idx + byte_length
-    return idx, minergate
+    return idx, junk
 
 
 if __name__ == "__main__":

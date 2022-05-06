@@ -31,30 +31,32 @@ def parse_transaction(transaction: bytes) -> (int, dict):
     idx = idx + _
     _, vouts = parse_vouts(transaction[idx:], vout_count)
     idx = idx + _
-    unknown = transaction[idx:idx+1].hex()
-    idx = idx + 1
-    _, tx_extra = parse_tx_extra(transaction[idx:])
-    tx_extra = list(transaction[idx:idx+_])
+    _, tx_extra_length = varint_decoder(transaction[idx:])
     idx = idx + _
-    _, rct_type = varint_decoder(transaction[idx:])
-    idx = idx + _
-    _, txn_fee = varint_decoder(transaction[idx:])
-    idx = idx + _
-    _, ecdh_info = parse_ecdh_info(transaction[idx:], vout_count)
-    idx = idx + _
-    _, outpk = parse_outpk(transaction[idx:], vout_count)
-    idx = idx + _
-    return idx, {"version": version,
+    tx_extra = list(transaction[idx:idx+tx_extra_length])
+    parse_tx_extra(transaction[idx:idx+tx_extra_length])
+    idx = idx + tx_extra_length
+    tx = {"version": version,
                  "unlock_time": unlock_time,
                  "vin": vins,
                  "vout": vouts,
-                 "tx_extra": tx_extra,
-                 "rct_signatures": {
-                     "type": rct_type,
-                     "txnFee": txn_fee,
-                     "ecdhInfo": ecdh_info,
-                     "outPk": outpk}
-                 }
+                 "tx_extra": tx_extra}
+    if version > 1:
+        _, rct_type = varint_decoder(transaction[idx:])
+        idx = idx + _
+        _, txn_fee = varint_decoder(transaction[idx:])
+        idx = idx + _
+        _, ecdh_info = parse_ecdh_info(transaction[idx:], vout_count)
+        idx = idx + _
+        _, outpk = parse_outpk(transaction[idx:], vout_count)
+        idx = idx + _
+        tx = tx | {"rct_signatures": {
+            "type": rct_type,
+            "txnFee": txn_fee,
+            "ecdhInfo": ecdh_info,
+            "outPk": outpk}
+        }
+    return idx, tx
 
 
 def parse_vins(data: bytes, count: int) -> (int, list):
@@ -167,3 +169,7 @@ if __name__ == "__main__":
     # txn_hash: 84799c2fc4c18188102041a74cef79486181df96478b717e8703512c7f7f3349
     txn_id = 8562996
     pretty_print(get_txs_pruned(get_db_env(), txn_id))
+
+
+# first tx id: 111
+# first tx hash: beb76a82ea17400cd6d7f595f70e1667d2018ed8f5a78d1ce07484222618c3cd
