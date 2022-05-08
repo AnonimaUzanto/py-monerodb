@@ -5,10 +5,6 @@ from pymonerodb.constants import DATABASE_DIRECTORY
 def test_monerodb_class():
     monerodb = MoneroDB(DATABASE_DIRECTORY)
 
-    # get_alt_block
-    alt_block = monerodb.get_alt_block("e7ba7e4c1887a53758dca50a92af1de644ca47e61876d9fc13667b3ac77d41f5")
-    assert type(alt_block) is dict
-
     # get_block_height
     block_height = monerodb.get_block_height("f63f84ae373307d18cb1b59a01174d19d104d378cb905bccdd04c3938d7426e5")
     assert block_height == 2595691
@@ -16,10 +12,6 @@ def test_monerodb_class():
     # get_block_info
     block_info = monerodb.get_block_info(2595691)
     assert type(block_info) is dict
-
-    # get_block
-    block = monerodb.get_block(2595691)
-    assert type(block) is dict
 
     # get_hf_version
     hf_version = monerodb.get_hf_version(2595691)
@@ -55,10 +47,6 @@ def test_monerodb_class():
     txpool_meta = monerodb.get_txpool_meta("ba3053cfe21c632ed0b9771d2af963e335fdf22fcb0e7bfd17ce3ad4d1c28e14")
     assert type(txpool_meta) is dict
 
-    # get_txs_prunable
-    tx_prunable = monerodb.get_txs_prunable(16239072)
-    assert type(tx_prunable) is dict
-
     # get_txs_prunable_hash
     txs_prunable_hash = monerodb.get_txs_prunable_hash(23897631)
     assert type(txs_prunable_hash) is str
@@ -66,7 +54,3 @@ def test_monerodb_class():
     # get_txs_prunable_tip
     tx_prunable_tip = monerodb.get_txs_prunable_tip(23897631)
     assert type(tx_prunable_tip) is int
-
-    # get_txs_pruned
-    tx_pruned = monerodb.get_txs_pruned(8562996)
-    assert type(tx_pruned) is dict

@@ -162,8 +162,19 @@ pip install -e ./py-monerodb
 from pymonerodb import MoneroDB
 from pymonerodb.utils.readers import pretty_print
 
+# Create an instance of the MoneroDB class
 monerodb = MoneroDB()
+
+# Read a block using block_id
 block = monerodb.get_block(2595691)
+
+# Print the results in a readable format
+pretty_print(block)
+
+# Read a block and parse tx_extra
+block = monerodb.get_block(2595691, parse_tx=True)
+
+# Print the results in a readable format
 pretty_print(block)
 ```
 

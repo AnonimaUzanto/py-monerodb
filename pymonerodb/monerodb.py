@@ -9,8 +9,8 @@ class MoneroDB:
         self.directory = DATABASE_DIRECTORY if directory is None else directory
         self.env = lmdb.open(self.directory, max_dbs=32, readonly=True)
 
-    def get_alt_block(self, block_hash: str) -> dict:
-        return xmrtables.get_alt_blocks(self.env, block_hash)
+    def get_alt_block(self, block_hash: str, parse: bool = True, parse_tx: bool = False) -> dict:
+        return xmrtables.get_alt_blocks(self.env, block_hash, parse, parse_tx)
 
     def get_block_height(self, block_hash: str) -> int:
         return xmrtables.get_block_heights(self.env, block_hash)
@@ -18,8 +18,8 @@ class MoneroDB:
     def get_block_info(self, block_height: int) -> dict:
         return xmrtables.get_block_info(self.env, block_height)
 
-    def get_block(self, block_id: int) -> dict:
-        return xmrtables.get_block(self.env, block_id)
+    def get_block(self, block_id: int, parse: bool = True, parse_tx: bool = False) -> dict:
+        return xmrtables.get_block(self.env, block_id, parse, parse_tx)
 
     def get_hf_version(self, block_id: int) -> int:
         return xmrtables.get_hf_versions(self.env, block_id)
@@ -54,5 +54,5 @@ class MoneroDB:
     def get_txs_prunable_tip(self, txn_id: int) -> int:
         return xmrtables.get_txs_prunable_tip(self.env, txn_id)
 
-    def get_txs_pruned(self, txn_id: int) -> dict:
-        return xmrtables.get_txs_pruned(self.env, txn_id)
+    def get_txs_pruned(self, txn_id: int, parse: bool = True, parse_tx: bool = False) -> dict:
+        return xmrtables.get_txs_pruned(self.env, txn_id, parse, parse_tx)

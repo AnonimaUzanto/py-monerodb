@@ -19,6 +19,12 @@ def varint_decoder(data):
     return idx, result
 
 
+def read_json_from_file(filename: str) -> json:
+    with open(filename) as file:
+        data = json.load(file)
+    return data
+
+
 def pretty_print(data: dict):
     print(json.dumps(data, indent=4))
 
