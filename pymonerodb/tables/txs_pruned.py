@@ -67,6 +67,13 @@ def parse_vins(data: bytes, count: int) -> (int, list):
     # https://github.com/monero-project/monero/blob/master/src/cryptonote_basic/cryptonote_basic.h#L572
     idx = 0
     vins = []
+    txin_type = data[idx:idx + 1].hex()
+    if txin_type == 'ff':
+        idx = idx + 1
+        _, height = varint_decoder(data[idx:])
+        idx = idx + _
+        vins.append({"gen": {"height": height}})
+        return idx, vins
     for i in range(count):
         txin_to_key = data[idx:idx + 1].hex()
         idx = idx + 1
