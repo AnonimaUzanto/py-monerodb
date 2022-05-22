@@ -46,20 +46,9 @@ def parse_transaction(transaction: bytes, parse_tx: bool = False) -> (int, dict)
           "vout": vouts,
           "extra": tx_extra}
     if version > 1:
-        _, rct_type = varint_decoder(transaction[idx:])
+        _, rct = parse_rct(transaction[idx:], vout_count)
         idx = idx + _
-        _, txn_fee = varint_decoder(transaction[idx:])
-        idx = idx + _
-        _, ecdh_info = parse_ecdh_info(transaction[idx:], vout_count)
-        idx = idx + _
-        _, outpk = parse_outpk(transaction[idx:], vout_count)
-        idx = idx + _
-        tx = tx | {"rct_signatures": {
-            "type": rct_type,
-            "txnFee": txn_fee,
-            "ecdhInfo": ecdh_info,
-            "outPk": outpk}
-        }
+        tx = tx | rct
     return idx, tx
 
 
@@ -117,6 +106,27 @@ def parse_vouts(data: bytes, count: int) -> (int, list):
                           "key": vout_key}
                       })
     return idx, vouts
+
+
+def parse_rct(data: bytes, vout_count: int) -> (int, dict):
+    idx = 0
+    _, rct_type = varint_decoder(data[idx:])
+    idx = idx + _
+    if rct_type == 0:
+        rct = {"rct_signatures": {"type": rct_type}}
+    else:
+        _, txn_fee = varint_decoder(data[idx:])
+        idx = idx + _
+        _, ecdh_info = parse_ecdh_info(data[idx:], vout_count)
+        idx = idx + _
+        _, outpk = parse_outpk(data[idx:], vout_count)
+        idx = idx + _
+        rct = {"rct_signatures": {
+            "type": rct_type,
+            "txnFee": txn_fee,
+            "ecdhInfo": ecdh_info,
+            "outPk": outpk}}
+    return idx, rct
 
 
 def parse_ecdh_info(data: bytes, count: int) -> (int, list):
